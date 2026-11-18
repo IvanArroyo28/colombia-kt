@@ -2,12 +2,13 @@
 
 [![CI](https://github.com/IvanArroyo28/colombia-kt/actions/workflows/ci.yml/badge.svg)](https://github.com/IvanArroyo28/colombia-kt/actions/workflows/ci.yml)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3-7F52FF?logo=kotlin&logoColor=white)
+[![JitPack](https://jitpack.io/v/IvanArroyo28/colombia-kt.svg)](https://jitpack.io/#IvanArroyo28/colombia-kt)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 **Kotlin utilities for Colombia**: public holidays, business days, NIT, pesos and DIVIPOLA.
 Pure Kotlin with no dependencies, so it works on **Android** (minSdk 26+) and on the **server** (Ktor, Spring…).
 
-> 🚧 **Under construction.** The first version (v0.1.0) is on its way. *[Leer en español ↓](#español)*
+*[Leer en español ↓](#español)*
 
 ## Roadmap
 
@@ -109,7 +110,26 @@ Edge cases handled: two holidays on the same day (June 30, 2025), holidays added
 
 ## Installation
 
-Coming soon via JitPack and Maven Central.
+Add JitPack to your repositories in `settings.gradle.kts`:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
+}
+```
+
+Then add the dependency:
+
+```kotlin
+dependencies {
+    implementation("com.github.IvanArroyo28:colombia-kt:v0.1.0")
+}
+```
+
+Maven Central is coming soon. See the [changelog](CHANGELOG.md) for what's in each version.
 
 ## License
 
@@ -127,9 +147,15 @@ taken from [datos.gov.co](https://www.datos.gov.co/d/gdxc-w37w) and licensed und
 **Utilidades en Kotlin para Colombia**: festivos, días hábiles, NIT, pesos y DIVIPOLA.
 Kotlin puro y sin dependencias: funciona en **Android** (minSdk 26+) y en **servidores** (Ktor, Spring…).
 
-> 🚧 **En construcción.** La primera versión (v0.1.0) viene en camino.
+### Instalación
 
-### Qué incluirá
+Agrega `maven("https://jitpack.io")` a tus repositorios y luego la dependencia:
+
+```kotlin
+implementation("com.github.IvanArroyo28:colombia-kt:v0.1.0")
+```
+
+### Qué incluye
 
 - ✅ **Festivos**: Ley Emiliani (Ley 51 de 1983), festivos que dependen de la Pascua y el nuevo festivo del 9 de julio (Ley 2578 de 2026). Cada regla sabe desde qué año aplica.
 - ✅ **Días hábiles**: saber si un día es hábil, sumar N días hábiles, contar días hábiles entre dos fechas.

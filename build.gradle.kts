@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.ivanarroyo28"
-version = "0.1.0-SNAPSHOT"
+version = "0.1.0"
 
 java {
     // Bytecode for Java 11: works on Android (minSdk 26+) and on any modern server.
