@@ -7,6 +7,8 @@ plugins {
     `java-library`
     // Publishes to Maven Central (Central Portal) with sources, javadoc and signatures.
     alias(libs.plugins.maven.publish)
+    // API documentation website, generated from the KDoc comments.
+    alias(libs.plugins.dokka)
 }
 
 group = "io.github.ivanarroyo28"
@@ -38,6 +40,26 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+// ./gradlew dokkaGenerate  →  build/dokka/html/index.html
+// Published to GitHub Pages by .github/workflows/docs.yml.
+// The Maven Central plugin also uses it for the javadoc jar, so IDEs show these docs.
+dokka {
+    moduleName.set("colombia-kt")
+    dokkaSourceSets.main {
+        // Intro page and a description for each package.
+        includes.from("docs/Module.md")
+        // "Source" links that open the code on GitHub.
+        sourceLink {
+            localDirectory.set(file("src/main/kotlin"))
+            remoteUrl("https://github.com/IvanArroyo28/colombia-kt/tree/main/src/main/kotlin")
+            remoteLineSuffix.set("#L")
+        }
+    }
+    pluginsConfiguration.html {
+        footerMessage.set("colombia-kt · MIT · DIVIPOLA data © DANE, CC BY-SA 4.0")
+    }
 }
 
 // Downloads DIVIPOLA from datos.gov.co (DANE, CC BY-SA 4.0) and regenerates the data files.

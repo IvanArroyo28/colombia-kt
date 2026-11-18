@@ -2,8 +2,9 @@
 
 [![CI](https://github.com/IvanArroyo28/colombia-kt/actions/workflows/ci.yml/badge.svg)](https://github.com/IvanArroyo28/colombia-kt/actions/workflows/ci.yml)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3-7F52FF?logo=kotlin&logoColor=white)
-[![JitPack](https://jitpack.io/v/IvanArroyo28/colombia-kt.svg)](https://jitpack.io/#IvanArroyo28/colombia-kt)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ivanarroyo28/colombia-kt)](https://central.sonatype.com/artifact/io.github.ivanarroyo28/colombia-kt)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+[![Docs](https://img.shields.io/badge/docs-API-blue)](https://ivanarroyo28.github.io/colombia-kt/)
 
 **Kotlin utilities for Colombia**: public holidays, business days, NIT, pesos and DIVIPOLA.
 Pure Kotlin with no dependencies, so it works on **Android** (minSdk 26+) and on the **server** (Ktor, Spring…).
@@ -110,26 +111,32 @@ Edge cases handled: two holidays on the same day (June 30, 2025), holidays added
 
 ## Installation
 
-Add JitPack to your repositories in `settings.gradle.kts`:
+colombia-kt is on **Maven Central**, so no extra repository is needed:
 
 ```kotlin
+dependencies {
+    implementation("io.github.ivanarroyo28:colombia-kt:0.1.0")
+}
+```
+
+<details>
+<summary>Alternative: JitPack</summary>
+
+```kotlin
+// settings.gradle.kts
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
         maven("https://jitpack.io")
     }
 }
+
+// build.gradle.kts
+implementation("com.github.IvanArroyo28:colombia-kt:v0.1.0")
 ```
+</details>
 
-Then add the dependency:
-
-```kotlin
-dependencies {
-    implementation("com.github.IvanArroyo28:colombia-kt:v0.1.0")
-}
-```
-
-Maven Central is coming soon. See the [changelog](CHANGELOG.md) for what's in each version.
+Full API reference: **[ivanarroyo28.github.io/colombia-kt](https://ivanarroyo28.github.io/colombia-kt/)**. See the [changelog](CHANGELOG.md) for what's in each version.
 
 ## License
 
@@ -149,11 +156,13 @@ Kotlin puro y sin dependencias: funciona en **Android** (minSdk 26+) y en **serv
 
 ### Instalación
 
-Agrega `maven("https://jitpack.io")` a tus repositorios y luego la dependencia:
+Está en **Maven Central**, no necesitas agregar ningún repositorio:
 
 ```kotlin
-implementation("com.github.IvanArroyo28:colombia-kt:v0.1.0")
+implementation("io.github.ivanarroyo28:colombia-kt:0.1.0")
 ```
+
+Documentación de la API: [ivanarroyo28.github.io/colombia-kt](https://ivanarroyo28.github.io/colombia-kt/)
 
 ### Qué incluye
 
