@@ -12,7 +12,7 @@ Pure Kotlin with no dependencies, so it works on **Android** (minSdk 26+) and on
 ## Roadmap
 
 - [x] **Public holidays**: Ley 51 de 1983 (Ley Emiliani), Easter-based holidays and the new 9 July holiday from Ley 2578 de 2026. Every rule knows the year it took effect.
-- [ ] **Business days**: is it a business day, add N business days, count business days between two dates.
+- [x] **Business days**: is it a business day, add N business days, count business days between two dates.
 - [ ] **NIT and ID documents**: DIAN verification digit, validation and formatting (`900.373.115-3`).
 - [ ] **Pesos**: format and parse COP amounts, and write amounts in words ("un millón doscientos mil pesos").
 - [ ] **DIVIPOLA**: departments and municipalities with their official DANE codes.
@@ -37,6 +37,26 @@ sanJose.celebrationDate  // 2025-03-19 (Wednesday)
 sanJose.isMoved          // true: Ley Emiliani moved it to Monday
 ```
 
+### Business days
+
+```kotlin
+import io.github.ivanarroyo28.colombia.businessdays.BusinessCalendar
+import io.github.ivanarroyo28.colombia.businessdays.plusBusinessDays
+
+val calendar = BusinessCalendar.MONDAY_TO_FRIDAY
+
+calendar.isBusinessDay(LocalDate.of(2026, 11, 16))                 // false: holiday Monday
+calendar.addBusinessDays(LocalDate.of(2026, 12, 18), 10)           // 2027-01-05: skips Christmas and New Year
+calendar.businessDaysIn(YearMonth.of(2026, 11)).size               // 19
+LocalDate.of(2026, 11, 13).plusBusinessDays(1)                     // 2026-11-17
+
+// Your own rules: Saturdays worked and the company closed on December 24
+val store = BusinessCalendar(
+    workingDays = DayOfWeek.entries.toSet() - DayOfWeek.SUNDAY,
+    extraDaysOff = setOf(LocalDate.of(2026, 12, 24)),
+)
+```
+
 Edge cases handled: two holidays on the same day (June 30, 2025), holidays added by law from a given year (9 July, since 2026), and dates computed in Colombian time even on servers in UTC.
 
 ## Installation
@@ -59,7 +79,7 @@ Kotlin puro y sin dependencias: funciona en **Android** (minSdk 26+) y en **serv
 ### Qué incluirá
 
 - ✅ **Festivos**: Ley Emiliani (Ley 51 de 1983), festivos que dependen de la Pascua y el nuevo festivo del 9 de julio (Ley 2578 de 2026). Cada regla sabe desde qué año aplica.
-- **Días hábiles**: saber si un día es hábil, sumar N días hábiles, contar días hábiles entre dos fechas.
+- ✅ **Días hábiles**: saber si un día es hábil, sumar N días hábiles, contar días hábiles entre dos fechas.
 - **NIT y documentos**: dígito de verificación de la DIAN, validación y formato (`900.373.115-3`).
 - **Pesos**: formato y lectura de montos en COP, y montos en letras ("un millón doscientos mil pesos").
 - **DIVIPOLA**: departamentos y municipios con sus códigos oficiales del DANE.
