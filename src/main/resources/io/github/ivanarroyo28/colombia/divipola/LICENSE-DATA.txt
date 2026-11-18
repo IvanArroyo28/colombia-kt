@@ -1,0 +1,14 @@
+DIVIPOLA data (departamentos.tsv, municipios.tsv)
+
+Source: DANE - Departamento Administrativo Nacional de Estadística,
+"División Político-Administrativa de Colombia (DIVIPOLA)", published on
+datos.gov.co: https://www.datos.gov.co/d/gdxc-w37w
+
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+https://creativecommons.org/licenses/by-sa/4.0/
+
+Changes: reformatted as tab-separated text by the updateDivipola Gradle task
+of colombia-kt. Names and coordinates are kept exactly as published.
+
+This license applies only to the data files in this folder. The colombia-kt
+source code is licensed under the MIT License.

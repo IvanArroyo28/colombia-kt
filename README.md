@@ -15,7 +15,7 @@ Pure Kotlin with no dependencies, so it works on **Android** (minSdk 26+) and on
 - [x] **Business days**: is it a business day, add N business days, count business days between two dates.
 - [x] **NIT and ID documents**: DIAN verification digit, validation and formatting (`900.373.115-3`).
 - [x] **Pesos**: format and parse COP amounts, and write amounts in words ("un millón doscientos mil pesos").
-- [ ] **DIVIPOLA**: departments and municipalities with their official DANE codes.
+- [x] **DIVIPOLA**: the 33 departments and 1,122 municipalities and areas with their official DANE codes, coordinates and accent-insensitive search.
 
 ## Usage
 
@@ -88,6 +88,23 @@ Pesos.toWords(BigDecimal("21500.50"))              // "veintiún mil quinientos 
 Pesos.toWords(1000000, mcte = true).uppercase()    // "UN MILLÓN DE PESOS M/CTE"
 ```
 
+### DIVIPOLA (departments and municipalities)
+
+```kotlin
+import io.github.ivanarroyo28.colombia.divipola.Divipola
+
+Divipola.municipality("13001")?.fullName      // "Cartagena de Indias, Bolívar"
+Divipola.department("05")?.name               // "Antioquia"
+Divipola.municipalitiesOf("91").size          // 11 (Amazonas, with its non-municipalized areas)
+
+Divipola.search("bogota").first().name        // "Bogotá, D.C."
+Divipola.search("la union").map { it.fullName }
+// ["La Unión, Antioquia", "La Unión, Nariño", "La Unión, Sucre", "La Unión, Valle del Cauca"]
+```
+
+Names come in normal capitalization ("San José del Guaviare") and also exactly as DANE writes them (`officialName`).
+To refresh the data when DANE publishes changes, run `./gradlew updateDivipola`.
+
 Edge cases handled: two holidays on the same day (June 30, 2025), holidays added by law from a given year (9 July, since 2026), and dates computed in Colombian time even on servers in UTC.
 
 ## Installation
@@ -96,7 +113,12 @@ Coming soon via JitPack and Maven Central.
 
 ## License
 
-[MIT](LICENSE) © Ivan Arroyo
+Code: [MIT](LICENSE) © Ivan Arroyo
+
+DIVIPOLA data (`src/main/resources/.../divipola/`): © DANE, *División Político-Administrativa de Colombia*,
+taken from [datos.gov.co](https://www.datos.gov.co/d/gdxc-w37w) and licensed under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The files were reformatted
+(tab-separated, coordinates unchanged). If you redistribute that data, keep the credit and the same license.
 
 ---
 
@@ -113,4 +135,6 @@ Kotlin puro y sin dependencias: funciona en **Android** (minSdk 26+) y en **serv
 - ✅ **Días hábiles**: saber si un día es hábil, sumar N días hábiles, contar días hábiles entre dos fechas.
 - ✅ **NIT y documentos**: dígito de verificación de la DIAN, validación y formato (`900.373.115-3`).
 - ✅ **Pesos**: formato y lectura de montos en COP, y montos en letras ("un millón doscientos mil pesos").
-- **DIVIPOLA**: departamentos y municipios con sus códigos oficiales del DANE.
+- ✅ **DIVIPOLA**: los 33 departamentos y 1.122 municipios y áreas con sus códigos oficiales del DANE, coordenadas y búsqueda sin importar tildes.
+
+Los datos de DIVIPOLA son del DANE (datos.gov.co) y tienen licencia CC BY-SA 4.0; el código de la librería es MIT.
