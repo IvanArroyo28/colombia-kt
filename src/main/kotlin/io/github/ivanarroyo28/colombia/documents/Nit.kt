@@ -1,5 +1,9 @@
 package io.github.ivanarroyo28.colombia.documents
 
+import io.github.ivanarroyo28.colombia.internal.groupThousands
+import io.github.ivanarroyo28.colombia.internal.isAsciiDigit
+import io.github.ivanarroyo28.colombia.internal.stripSeparators
+
 /**
  * NIT ("Número de Identificación Tributaria") and its DIAN verification digit ("dígito de verificación").
  *
@@ -101,6 +105,3 @@ public data class NitNumber(
     /** "900.373.115-3" */
     public fun formatted(): String = "${groupThousands(number)}-$verificationDigit"
 }
-
-/** Only 0–9: [Char.isDigit] would also accept digits from other scripts, like Arabic ones. */
-internal fun Char.isAsciiDigit(): Boolean = this in '0'..'9'

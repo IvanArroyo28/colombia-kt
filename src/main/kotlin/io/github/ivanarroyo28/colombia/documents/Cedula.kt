@@ -1,5 +1,9 @@
 package io.github.ivanarroyo28.colombia.documents
 
+import io.github.ivanarroyo28.colombia.internal.groupThousands
+import io.github.ivanarroyo28.colombia.internal.isAsciiDigit
+import io.github.ivanarroyo28.colombia.internal.stripSeparators
+
 /**
  * Colombian citizenship card number ("cédula de ciudadanía").
  *
