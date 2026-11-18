@@ -5,7 +5,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin.jvm)
     `java-library`
-    `maven-publish`
+    // Publishes to Maven Central (Central Portal) with sources, javadoc and signatures.
+    alias(libs.plugins.maven.publish)
 }
 
 group = "io.github.ivanarroyo28"
@@ -15,8 +16,6 @@ java {
     // Bytecode for Java 11: works on Android (minSdk 26+) and on any modern server.
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
-    withSourcesJar()
-    withJavadocJar()
 }
 
 kotlin {
@@ -72,32 +71,45 @@ tasks.register("updateDivipola") {
     }
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            artifactId = "colombia-kt"
-            from(components["java"])
-            pom {
-                name.set("colombia-kt")
-                description.set("Kotlin utilities for Colombia: public holidays, business days, NIT, pesos and DIVIPOLA.")
-                url.set("https://github.com/IvanArroyo28/colombia-kt")
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("IvanArroyo28")
-                        name.set("Ivan Arroyo")
-                    }
-                }
-                scm {
-                    url.set("https://github.com/IvanArroyo28/colombia-kt")
-                    connection.set("scm:git:https://github.com/IvanArroyo28/colombia-kt.git")
-                }
+mavenPublishing {
+    publishToMavenCentral()
+
+    // Maven Central requires signed files. The key only exists in GitHub Secrets,
+    // so local builds and JitPack (which don't have it) skip signing.
+    if (providers.gradleProperty("signingInMemoryKey").isPresent) {
+        signAllPublications()
+    }
+
+    coordinates(group.toString(), "colombia-kt", version.toString())
+
+    pom {
+        name.set("colombia-kt")
+        description.set("Kotlin utilities for Colombia: public holidays, business days, NIT, pesos and DIVIPOLA.")
+        inceptionYear.set("2026")
+        url.set("https://github.com/IvanArroyo28/colombia-kt")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/licenses/MIT")
+                distribution.set("repo")
             }
+            license {
+                name.set("CC BY-SA 4.0 (DIVIPOLA data from DANE)")
+                url.set("https://creativecommons.org/licenses/by-sa/4.0/")
+                distribution.set("repo")
+            }
+        }
+        developers {
+            developer {
+                id.set("IvanArroyo28")
+                name.set("Ivan Arroyo")
+                url.set("https://github.com/IvanArroyo28")
+            }
+        }
+        scm {
+            url.set("https://github.com/IvanArroyo28/colombia-kt")
+            connection.set("scm:git:git://github.com/IvanArroyo28/colombia-kt.git")
+            developerConnection.set("scm:git:ssh://git@github.com/IvanArroyo28/colombia-kt.git")
         }
     }
 }
